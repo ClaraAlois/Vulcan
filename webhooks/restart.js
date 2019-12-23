@@ -6,6 +6,11 @@ const logger   = xrequire('./managers/LogManager').getInstance();
 module.exports = (vulcan, request, response) => {
     const command = (global.isLinux ? 'sudo ' : '') + 'npm run production:restart';
 
-    exec(command, (err, stdout, stderr) =>
-        logger.error(`Could not execute webhook command: ${command}\n\tError: ${err.message}\n\tstdout: ${stdout}\n\tstdin: ${stderr}`));
+    exec(command, (err, stdout, stderr) => {
+        if (err) {
+            logger.error(`Could not execute webhook command: ${command}\n\tError: ${err.message}\n\tstdout: ${stdout}\n\tstdin: ${stderr}`));
+        } 
+        
+        logger.log(`Shutdown command executed successfuly`)；
+    });
 };
